@@ -1,0 +1,27 @@
+{
+  "name": "forum",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run --watch",
+    "lint": "eslint src --ext .ts --fix"
+  },
+  "keywords": [
+    "forum",
+    "microservice",
+    "DDD",
+    "Clean Arch"
+  ],
+  "author": "Paolo Prodossimo Lopes",
+  "license": "ISC",
+  "description": "Forum application",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^20.12.13",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vitest-globals": "^1.5.0",
+    "typescript": "^5.4.5",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  }
+}
