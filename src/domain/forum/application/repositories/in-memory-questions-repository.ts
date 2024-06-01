@@ -13,4 +13,8 @@ export class InMemmoryQuestionsRepository implements QuestionsRepository {
     if (!question) return null
     return question
   }
+
+  async delete(id: string): Promise<void> {
+    this.questions = this.questions.filter((q) => q.id !== id)
+  }
 }
