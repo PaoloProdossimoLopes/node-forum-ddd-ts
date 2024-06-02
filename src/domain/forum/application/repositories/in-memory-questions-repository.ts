@@ -1,3 +1,4 @@
+import { PaginationParam } from '@/core/repositories/pagination-params'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from './questions-repository'
 
@@ -27,5 +28,12 @@ export class InMemmoryQuestionsRepository implements QuestionsRepository {
   async save(question: Question): Promise<void> {
     const index = this.questions.findIndex((q) => q.id === question.id)
     this.questions[index] = question
+  }
+
+  async findManyRecent(params: PaginationParam): Promise<Question[]> {
+    const { page } = params
+    return this.questions
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * 20, page * 20)
   }
 }
