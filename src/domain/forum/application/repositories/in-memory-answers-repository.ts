@@ -8,6 +8,11 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.answers.push(answer)
   }
 
+  async save(answer: Answer): Promise<void> {
+    const index = this.answers.findIndex((a) => a.id === answer.id)
+    this.answers[index] = answer
+  }
+
   async delete(answer: Answer): Promise<void> {
     const index = this.answers.findIndex((a) => a.id === answer.id)
     this.answers.splice(index, 1)
