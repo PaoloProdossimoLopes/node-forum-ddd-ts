@@ -1,5 +1,4 @@
-import { Answer } from '../../enterprise/entities/answer'
-import { AnswersRepository } from '../repositories/answers-repository'
+import { InMemoryAnswersRepository } from '../repositories/in-memory-answers-repository'
 import { AnswerQuestionUseCase } from './answer-question'
 
 describe('Answer quesiton', () => {
@@ -7,7 +6,7 @@ describe('Answer quesiton', () => {
     const answerContent = 'new answer'
     const instructorId = 'any-instructor-id'
     const questionId = 'any-question-id'
-    const answersRepository = new AnswersRepositoryMock()
+    const answersRepository = new InMemoryAnswersRepository()
     const sut = new AnswerQuestionUseCase(answersRepository)
 
     const answer = await sut.execute({
@@ -23,11 +22,3 @@ describe('Answer quesiton', () => {
     expect(answer.questionId).toEqual(questionId)
   })
 })
-
-class AnswersRepositoryMock implements AnswersRepository {
-  answers: Answer[] = []
-
-  async create(answer: Answer) {
-    this.answers.push(answer)
-  }
-}
