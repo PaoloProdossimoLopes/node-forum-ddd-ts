@@ -32,12 +32,13 @@ describe('Choose question best answer', () => {
       answersRepository,
     )
 
-    const { question: questionResult } = await sut.execute({
+    const result = await sut.execute({
       answerId: answer.id,
       authorId: authorId.toString(),
     })
 
-    expect(questionResult.bestAnswerId?.toString()).toEqual(answer.id)
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.question.bestAnswerId?.toString()).toEqual(answer.id)
   })
 
   it('should not be able to choose best answer if you are not the author', async () => {
@@ -64,12 +65,10 @@ describe('Choose question best answer', () => {
       questionsRepository,
       answersRepository,
     )
-
-    expect(async () => {
-      await sut.execute({
-        answerId: answer.id,
-        authorId: answer.id.toString(),
-      })
-    }).rejects.toThrowError()
+    const result = await sut.execute({
+      answerId: answer.id,
+      authorId: answer.id.toString(),
+    })
+    expect(result.isLeft()).toBeTruthy()
   })
 })

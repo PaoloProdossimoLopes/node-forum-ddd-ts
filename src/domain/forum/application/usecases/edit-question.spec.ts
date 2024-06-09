@@ -31,14 +31,14 @@ describe('Edit question', () => {
     questionsRepository.questions = [question]
     const sut = new EditQuestionUseCase(questionsRepository)
 
-    expect(async () => {
-      await sut.execute({
-        questionId: question.id,
-        authorId: 'other author id',
-        title: 'new title',
-        content: 'new content',
-      })
-    }).rejects.toThrowError()
+    const result = await sut.execute({
+      questionId: question.id,
+      authorId: 'other author id',
+      title: 'new title',
+      content: 'new content',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
   })
 })
 

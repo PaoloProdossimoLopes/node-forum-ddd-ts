@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/either'
 import { UniqueEntityId } from '../../../../core/entities/unique-entity-id'
 import { Answer } from '../../enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
@@ -8,6 +9,13 @@ interface AnswerQuestionUseCaseRequest {
   answerContent: string
 }
 
+type Response = Either<
+  void,
+  {
+    answer: Answer
+  }
+>
+
 export class AnswerQuestionUseCase {
   constructor(private readonly answerRepository: AnswersRepository) {}
 
@@ -15,7 +23,7 @@ export class AnswerQuestionUseCase {
     instructorId,
     questionId,
     answerContent,
-  }: AnswerQuestionUseCaseRequest) {
+  }: AnswerQuestionUseCaseRequest): Promise<Response> {
     const answer = Answer.create({
       content: answerContent,
       authorId: new UniqueEntityId(instructorId),
@@ -24,6 +32,6 @@ export class AnswerQuestionUseCase {
 
     await this.answerRepository.create(answer)
 
-    return answer
+    return right({ answer })
   }
 }

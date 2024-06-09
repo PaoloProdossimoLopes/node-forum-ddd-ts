@@ -42,10 +42,11 @@ describe('Fetch recet question', () => {
       questionId,
     )
     questionsRepository.questions = [q3, q2, q1]
-    const { questions } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
     })
 
-    expect(questions).toEqual([q1, q2, q3])
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.questions).toEqual([q1, q2, q3])
   })
 })

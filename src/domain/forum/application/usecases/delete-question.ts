@@ -1,10 +1,12 @@
+import { Either, left, right } from '@/core/either'
 import { QuestionsRepository } from '../repositories/questions-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface Request {
   questionId: string
 }
 
-type Response = void
+type Response = Either<ResourceNotFoundError, object>
 
 export class DeleteQuestionUseCase {
   constructor(private readonly questionsRepository: QuestionsRepository) {}
@@ -13,8 +15,9 @@ export class DeleteQuestionUseCase {
     const { questionId } = request
 
     const question = await this.questionsRepository.findById(questionId)
-    if (!question) throw new Error('Question not found')
+    if (!question) return left(new ResourceNotFoundError())
 
     await this.questionsRepository.delete(questionId)
+    return right({})
   }
 }

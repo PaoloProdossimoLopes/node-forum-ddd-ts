@@ -33,11 +33,12 @@ describe('Fetch question answers', () => {
       createdAt: new Date(2020, 0, 10),
     })
     answersRepository.answers = [a1, a2, a3]
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       questionId: questionId.toString(),
       page: 1,
     })
 
-    expect(answers).toEqual([a1, a2, a3])
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.answers).toEqual([a1, a2, a3])
   })
 })

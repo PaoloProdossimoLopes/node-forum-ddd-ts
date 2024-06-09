@@ -31,15 +31,18 @@ describe('Get question by slug', () => {
     ]
     const sut = new GetQuestionBySlugUseCase(questionsRepository)
 
-    const { question } = await sut.execute({ slug: slug.value })
+    const result = await sut.execute({ slug: slug.value })
 
-    expect(question.id).toEqual(id.toString())
-    expect(question.authorId).toEqual(authorId.toString())
-    expect(question.createdAt).toEqual(createdAt)
-    expect(question.content).toEqual(content)
-    expect(question.slug).toEqual(slug.value)
-    expect(question.title).toEqual(title)
-    expect(question.updatedAt).toEqual(updatedAt)
-    expect(question.bestAnswerId?.toString()).toEqual(bestAnswerId.toString())
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.question.id).toEqual(id.toString())
+    expect(result.value?.question.authorId).toEqual(authorId.toString())
+    expect(result.value?.question.createdAt).toEqual(createdAt)
+    expect(result.value?.question.content).toEqual(content)
+    expect(result.value?.question.slug).toEqual(slug.value)
+    expect(result.value?.question.title).toEqual(title)
+    expect(result.value?.question.updatedAt).toEqual(updatedAt)
+    expect(result.value?.question.bestAnswerId?.toString()).toEqual(
+      bestAnswerId.toString(),
+    )
   })
 })

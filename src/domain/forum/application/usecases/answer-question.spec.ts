@@ -9,16 +9,17 @@ describe('Answer quesiton', () => {
     const answersRepository = new InMemoryAnswersRepository()
     const sut = new AnswerQuestionUseCase(answersRepository)
 
-    const answer = await sut.execute({
+    const result = await sut.execute({
       instructorId,
       questionId,
       answerContent,
     })
 
+    expect(result.isRight()).toBeTruthy()
     expect(answersRepository.answers.length).toEqual(1)
-    expect(answersRepository.answers[0]).toBe(answer)
-    expect(answer.content).toEqual(answerContent)
-    expect(answer.authorId).toEqual(instructorId)
-    expect(answer.questionId).toEqual(questionId)
+    expect(answersRepository.answers[0]).toBe(result.value?.answer)
+    expect(result.value?.answer.content).toEqual(answerContent)
+    expect(result.value?.answer.authorId).toEqual(instructorId)
+    expect(result.value?.answer.questionId).toEqual(questionId)
   })
 })

@@ -9,19 +9,20 @@ describe('Create question', () => {
     const answersRepository = new InMemmoryQuestionsRepository()
     const sut = new CreateQuestionUseCase(answersRepository)
 
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       authorId,
       content,
       title,
     })
 
+    expect(result.isRight()).toBeTruthy()
     expect(answersRepository.questions.length).toEqual(1)
-    expect(answersRepository.questions[0]).toBe(question)
-    expect(question.id).toBeTruthy()
-    expect(question.createdAt).toBeTruthy()
-    expect(question.updatedAt).toBeFalsy()
-    expect(question.content).toEqual(content)
-    expect(question.authorId).toEqual(authorId)
-    expect(question.title).toEqual(title)
+    expect(answersRepository.questions[0]).toBe(result.value?.question)
+    expect(result.value?.question.id).toBeTruthy()
+    expect(result.value?.question.createdAt).toBeTruthy()
+    expect(result.value?.question.updatedAt).toBeFalsy()
+    expect(result.value?.question.content).toEqual(content)
+    expect(result.value?.question.authorId).toEqual(authorId)
+    expect(result.value?.question.title).toEqual(title)
   })
 })

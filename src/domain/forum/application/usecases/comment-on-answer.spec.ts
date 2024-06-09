@@ -26,13 +26,16 @@ describe('Comment on Answer', () => {
     )
 
     const content = 'any content'
-    const { comment } = await sut.execute({
+    const result = await sut.execute({
       authorId: authorId.toString(),
       content,
       answerId,
     })
 
+    expect(result.isRight()).toBeTruthy()
     expect(answerCommentsRepository.answerComments.length).toEqual(1)
-    expect(answerCommentsRepository.answerComments[0]).toEqual(comment)
+    expect(answerCommentsRepository.answerComments[0]).toEqual(
+      result.value?.comment,
+    )
   })
 })

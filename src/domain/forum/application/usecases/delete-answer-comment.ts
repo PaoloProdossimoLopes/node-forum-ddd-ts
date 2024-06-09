@@ -1,10 +1,12 @@
+import { Either, left, right } from '@/core/either'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface Request {
   answerCommentId: string
 }
 
-type Response = void
+type Response = Either<ResourceNotFoundError, object>
 
 export class DeleteAnswerCommentUseCase {
   constructor(
@@ -16,8 +18,9 @@ export class DeleteAnswerCommentUseCase {
 
     const answerComment =
       await this.answerCommentsRepository.findById(answerCommentId)
-    if (!answerComment) throw new Error('Answer comment not found')
+    if (!answerComment) return left(new ResourceNotFoundError())
 
     await this.answerCommentsRepository.delete(answerComment)
+    return right({})
   }
 }

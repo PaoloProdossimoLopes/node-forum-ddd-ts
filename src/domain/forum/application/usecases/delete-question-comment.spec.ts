@@ -24,8 +24,8 @@ describe('Delete question comment', () => {
     const repository = new InMemoryQuestionCommentsRepository()
     const sut = new DeleteQuestionCommentUseCase(repository)
 
-    expect(async () => {
-      await sut.execute({ questionCommentId: commentId })
-    }).rejects.toThrowError()
+    const result = await sut.execute({ questionCommentId: commentId })
+
+    expect(result.isLeft()).toBeTruthy()
   })
 })

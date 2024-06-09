@@ -46,11 +46,12 @@ describe('Fetch question comments', () => {
     })
     questionRepostiory.questions = [question]
     questionCommentsRepository.questionComments = [comment1, comment2, comment3]
-    const { comments } = await sut.execute({
+    const result = await sut.execute({
       questionId: question.id,
       page: 1,
     })
 
-    expect(comments).toEqual([comment1, comment2, comment3])
+    expect(result.isRight()).toBeTruthy()
+    expect(result.value?.comments).toEqual([comment1, comment2, comment3])
   })
 })

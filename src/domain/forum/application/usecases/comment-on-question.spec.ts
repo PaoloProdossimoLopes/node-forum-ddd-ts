@@ -25,13 +25,16 @@ describe('Choose question best answer', () => {
     )
 
     const content = 'any content'
-    const { comment } = await sut.execute({
+    const result = await sut.execute({
       authorId: authorId.toString(),
       content,
       questionId,
     })
 
+    expect(result.isRight()).toBeTruthy()
     expect(questionCommentsRepository.questionComments.length).toEqual(1)
-    expect(questionCommentsRepository.questionComments[0]).toEqual(comment)
+    expect(questionCommentsRepository.questionComments[0]).toEqual(
+      result.value?.comment,
+    )
   })
 })
