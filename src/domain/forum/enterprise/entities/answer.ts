@@ -1,9 +1,11 @@
 import { Entity } from '../../../../core/entities/entity'
 import { UniqueEntityId } from '../../../../core/entities/unique-entity-id'
 import { Optional } from '../../../../core/types/optional'
+import { AnswerAttachmentWatchedList } from './answer-attachment-watched-list'
 
 interface AnswerProps {
   content: string
+  attachments: AnswerAttachmentWatchedList
   questionId: UniqueEntityId
   authorId: UniqueEntityId
   createdAt: Date
@@ -12,12 +14,13 @@ interface AnswerProps {
 
 export class Answer extends Entity<AnswerProps> {
   static create(
-    props: Optional<AnswerProps, 'createdAt'>,
+    props: Optional<AnswerProps, 'createdAt' | 'attachments'>,
     id?: UniqueEntityId,
   ) {
     const answer = new Answer(
       {
         ...props,
+        attachments: props.attachments ?? new AnswerAttachmentWatchedList([]),
         createdAt: new Date(),
       },
       id,
@@ -32,6 +35,14 @@ export class Answer extends Entity<AnswerProps> {
   set content(newContent: string) {
     this.props.content = newContent
     this.props.updatedAt = new Date()
+  }
+
+  get attachments() {
+    return this.props.attachments
+  }
+
+  set attachments(newAttachments: AnswerAttachmentWatchedList) {
+    this.props.attachments = newAttachments
   }
 
   get questionId() {

@@ -6,6 +6,7 @@ describe('Create question', () => {
     const authorId = 'any author id'
     const content = 'any content'
     const title = 'any title id'
+    const attachmentIds = ['attachment id 1', 'attachment id 2']
     const answersRepository = new InMemmoryQuestionsRepository()
     const sut = new CreateQuestionUseCase(answersRepository)
 
@@ -13,6 +14,7 @@ describe('Create question', () => {
       authorId,
       content,
       title,
+      attachmentIds,
     })
 
     expect(result.isRight()).toBeTruthy()
@@ -24,5 +26,13 @@ describe('Create question', () => {
     expect(result.value?.question.content).toEqual(content)
     expect(result.value?.question.authorId).toEqual(authorId)
     expect(result.value?.question.title).toEqual(title)
+    // expect(result.value?.question.attachments).toEqual([
+    //   expect.objectContaining({
+    //     attachmentId: new UniqueEntityId('attachment id 1'),
+    //   }),
+    //   expect.objectContaining({
+    //     attachmentId: new UniqueEntityId('attachment id 2'),
+    //   }),
+    // ])
   })
 })
