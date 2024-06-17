@@ -1,3 +1,5 @@
+# Forum
+
 # Configuração
 
 1. Instalar typescript com o comando `npm i typescript -D`
@@ -56,3 +58,15 @@ o seguinte codigo
 ```
 
 10. Crie um script de lint no package.json `eslint src --ext .ts --fix`
+
+## Subdominios
+
+ - core: Oque da dinheiro
+ - supproting: Da suporte para o core funcionar
+ - gaeneric: Voce precisa, mas nao sao tao importantes
+
+ ### Exemplo para um e-comerce
+
+- Core: Compra, Catalogo, Pagamento
+- Supporting: Estoque, Entrega
+- Generic: Notificaçao ao cliente, promoçoes, chat
